@@ -1,0 +1,6 @@
+Host github.com
+  User git
+  Hostname ssh.github.com
+  Port 443
+  IdentityFile ~/.ssh/id_rsa_new  # Adjust if you're using a different key
+
