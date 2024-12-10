@@ -1,13 +1,9 @@
 import json
-import logging
 from flask import Flask, render_template, request, redirect, url_for
 import threading
 import subprocess
 
 app = Flask(__name__)
-
-# إعدادات السجلات
-logging.basicConfig(level=logging.INFO)
 
 USER_DATA_FILE = 'users.json'
 
@@ -27,14 +23,12 @@ users = load_users()
 def run_game():
     try:
         # محاولة تشغيل ملف اللعبة عبر subprocess
-        logging.info("Starting the game...")
         subprocess.run(["python3", "breaker_game.py"], check=True)
-        logging.info("Game started successfully.")
     except subprocess.CalledProcessError as e:
-        logging.error(f"Error running game: {e}")
+        print(f"Error running game: {e}")
         return f"An error occurred while starting the game: {e}"
     except Exception as e:
-        logging.error(f"Unexpected error: {e}")
+        print(f"Unexpected error: {e}")
         return f"An unexpected error occurred: {e}"
 
 def start_game_in_thread():
