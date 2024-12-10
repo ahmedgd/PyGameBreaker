@@ -1,16 +1,11 @@
 import json
-import logging
 from flask import Flask, render_template, request, redirect, url_for
 import threading
 import subprocess
-import os
 
 app = Flask(__name__)
 
 USER_DATA_FILE = 'users.json'
-
-# إعدادات تسجيل الأخطاء
-logging.basicConfig(level=logging.DEBUG)
 
 def load_users():
     try:
@@ -26,13 +21,7 @@ def save_users(users):
 users = load_users()
 
 def run_game():
-    try:
-        logging.info("Starting the game...")
-        subprocess.run(["python3", "breaker_game.py"], check=True)
-    except subprocess.CalledProcessError as e:
-        logging.error(f"Error while running the game: {e}")
-    except Exception as e:
-        logging.error(f"An unexpected error occurred: {e}")
+    subprocess.run(["python3", "breaker_game.py"])
 
 def start_game_in_thread():
     game_thread = threading.Thread(target=run_game)
@@ -61,5 +50,4 @@ def start_game():
     return "Game Started!"
 
 if __name__ == "__main__":
-    port = int(os.environ.get("PORT", 5000))  # تحديد المنفذ من متغير البيئة أو 5000 افتراضيًا
-    app.run(debug=True, host="0.0.0.0", port=port)
+    app.run(debug=True, host="0.0.0.0", port=8000)
