@@ -5,7 +5,22 @@
       "use": "@vercel/python"
     }
   ],
+  "routes": [
+    {
+      "src": "/submit_registration",
+      "dest": "/app.py"
+    },
+    {
+      "src": "/game",
+      "dest": "/app.py"
+    },
+    {
+      "src": "/start_game",
+      "dest": "/app.py"
+    }
+  ],
   "env": {
-    "PYTHON_VERSION": "3.9"
+    "FLASK_APP": "app.py",
+    "FLASK_ENV": "production"
   }
 }
