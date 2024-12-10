@@ -21,7 +21,15 @@ def save_users(users):
 users = load_users()
 
 def run_game():
-    subprocess.run(["python3", "breaker_game.py"])
+    try:
+        # محاولة تشغيل ملف اللعبة عبر subprocess
+        subprocess.run(["python3", "breaker_game.py"], check=True)
+    except subprocess.CalledProcessError as e:
+        print(f"Error running game: {e}")
+        return f"An error occurred while starting the game: {e}"
+    except Exception as e:
+        print(f"Unexpected error: {e}")
+        return f"An unexpected error occurred: {e}"
 
 def start_game_in_thread():
     game_thread = threading.Thread(target=run_game)
@@ -46,7 +54,9 @@ def game_page():
 
 @app.route('/start_game')
 def start_game():
-    start_game_in_thread()
+    result = start_game_in_thread()  # Call to start game in thread
+    if result:
+        return result  # If there is an error, show it
     return "Game Started!"
 
 if __name__ == "__main__":
