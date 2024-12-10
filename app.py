@@ -32,8 +32,9 @@ def run_game():
         return f"An unexpected error occurred: {e}"
 
 def start_game_in_thread():
+    # لا نحتاج لارجاع أي شيء هنا، فقط تشغيل اللعبة في خيط مستقل
     game_thread = threading.Thread(target=run_game)
-    game_thread.daemon = True
+    game_thread.daemon = True  # تأكد من أن الخيط سيغلق تلقائيًا عند إنهاء التطبيق
     game_thread.start()
 
 @app.route('/')
@@ -54,10 +55,8 @@ def game_page():
 
 @app.route('/start_game')
 def start_game():
-    result = start_game_in_thread()  # Call to start game in thread
-    if result:
-        return result  # If there is an error, show it
-    return "Game Started!"
+    start_game_in_thread()  # تشغيل اللعبة في خيط خلفي
+    return "Game Started!"  # إرجاع رسالة تأكيد بأن اللعبة قد بدأت
 
 if __name__ == "__main__":
     app.run(debug=True, host="0.0.0.0", port=8000)
