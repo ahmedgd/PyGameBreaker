@@ -2,6 +2,10 @@ import json
 from flask import Flask, render_template, request, redirect, url_for
 import threading
 import subprocess
+import sys
+sys.path.insert(0, '/home/admingmail/mysite/PyGameBreaker')  # تأكد من المسار الصحيح للمجلد
+
+from app import app as application  # تأكد من أن 'app' هو اسم التطبيق الرئيسي في ملفك
 
 app = Flask(__name__)
 
